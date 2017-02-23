@@ -1,0 +1,73 @@
+AirlineDelays
+========================================================
+author: Chris Chubb
+date: Feb 23, 2017
+autosize: true
+
+***
+
+![my image](flight-delayed.jpg)
+
+Airline Delays
+========================================================
+
+Every airline tries to launch it's airplanes on a predictable schedule. But delays happen. This application will examine departure delays at major Florida airports during
+January 2008.
+
+Dependent Variables
+
+- Delay time: Can remove extremely long delays as they are statistically very rare.
+- Departure Airport: Only the 5 major airports in Florida are listed.
+- Airline: All airlines with flights at the 5 airports are listed.
+
+Data Preparation
+========================================================
+
+Original flight data for 2008 downloaded from http://stat-computing.org/dataexpo/2009/the-data.html
+
+Pre-Processing:
+
+- Only January flights are considered. In general, the weather in Florida in January is mild and therefore less weather-related delays should be in the data set.
+- Removed Cancelled and Diverted flights
+- Filter to only the following airports: "JAX","MCO","MIA","FLL","TPA"
+- Restricted to only delays of less than 120 minutes
+- Airline name is shortened to only the first word for display
+
+Summary of Data
+========================================================
+
+Total Number of Flights at each Airport
+```{r data_summary, echo=FALSE}
+library(dplyr)
+delays <- readRDS("delays.rds")
+
+kable(delays %>% group_by(Origin) %>% summarise(TotalFlights = length(DepDelay)) %>% arrange(desc(TotalFlights)))
+```
+
+***
+
+Total Number of Flights by Each Airline
+```{r count_airline, echo=FALSE}
+kable(delays %>% group_by(Name) %>% summarise(TotalFlights = length(DepDelay)) %>% arrange(desc(TotalFlights)))
+```
+
+Worst Offenders
+========================================================
+
+So, who and where do you NOT want to fly with if you are in a hurry?
+
+```{r worst_offenders, echo=FALSE}
+
+kable(delays %>% group_by(Origin, Name) %>% summarise(MeanDelay = round(mean(DepDelay), 1)) %>% arrange(desc(MeanDelay)) %>% head(5))
+
+```
+
+Summary
+========================================================
+
+While delays at airports are unavoidable, certain airports and certain airlines have significantly more departure delays on average than others.
+
+You can filter and compare statistics at https://cchubb.shinyapps.io/AirlineDelays/
+
+Additional months should be studied to determine if January is the best choice for comparisons.
+

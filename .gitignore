@@ -1,3 +1,6 @@
 /data/*.csv
 /data/2008.csv.bz2
 /rsconnect
+/AirlineDelays-figure
+/AirlineDelays-rpubs.html
+/AirlineDelays.md

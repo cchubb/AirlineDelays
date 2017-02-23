@@ -27,8 +27,8 @@ delays <- inner_join(
              raw_2008$Cancelled == 0 &
              raw_2008$Diverted == 0 &
              raw_2008$Origin %in% c("JAX","MCO","MIA","FLL","TPA") &
-             raw_2008$DepDelay <= 60,
-           c("UniqueCarrier", "Origin", "DepDelay", "DayOfWeek")],
+             raw_2008$DepDelay <= 120,
+           c("UniqueCarrier", "Origin", "DepDelay")],
   carriers,
   by=c("UniqueCarrier" = "Code")
 )
