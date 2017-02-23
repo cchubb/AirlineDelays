@@ -15,6 +15,8 @@ shinyUI(fluidPage(
   # Application title
   titlePanel("Jan 2008 Departure Delays by Airport and Airline"),
 
+  p("Select which Florida airports and airlines you are interested in and what the min/max delays are to compare the flight delays at each airport by airline."),
+
   # Sidebar with a slider input for number of bins
   sidebarLayout(
     sidebarPanel(
@@ -28,7 +30,7 @@ shinyUI(fluidPage(
                    min = 0,
                    max = 120,
                    value = 60),
-       selectInput("airports", "Airports",
+       selectInput("airports", "Airports (Multiselect)",
                    c("Fort Lauderdale" = "FLL",
                      "Jacksonville" = "JAX",
                      "Orlando" = "MCO",
@@ -41,7 +43,7 @@ shinyUI(fluidPage(
                               "Tampa" = "TPA"),
                    multiple = TRUE,
                    selectize=FALSE, size = 5),
-       selectInput("companies", "Companies",
+       selectInput("companies", "Airlines (Multiselect)",
                    c("AirTran Airways Corporation",
                      "Alaska Airlines Inc.",
                      "American Airlines Inc.",
@@ -79,7 +81,10 @@ shinyUI(fluidPage(
 
     # Show a plot of the generated distribution
     mainPanel(
-       plotOutput("DelayPlot")
+       h2("Delay Distribution"),
+       plotOutput("DelayPlot"),
+       h3("Delay Details"),
+       dataTableOutput("DelayTable")
     )
   )
 ))

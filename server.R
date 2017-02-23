@@ -23,6 +23,10 @@ shinyServer(function(input, output) {
              Description %in% input$companies)
   })
 
+  delayMeans <- reactive({
+    showData() %>% group_by(Origin, Name) %>% summarise(MeanDelay = round(mean(DepDelay), 1))
+  })
+
   output$DelayPlot <- renderPlot({
 
 
@@ -35,6 +39,8 @@ shinyServer(function(input, output) {
 
 
   })
+
+  output$DelayTable <- renderDataTable(delayMeans())
 
 
 

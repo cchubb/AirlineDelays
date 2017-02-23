@@ -46,6 +46,9 @@ p <- ggplot(delays, aes(x=Origin, y=DepDelay)) +
 print(p)
 
 
+#Try a data table
+delays %>% group_by(Origin, Name) %>% summarise(MeanDelay = round(mean(DepDelay), 1))
+
 
 
 
