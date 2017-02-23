@@ -49,7 +49,11 @@ print(p)
 #Try a data table
 delays %>% group_by(Origin, Name) %>% summarise(MeanDelay = round(mean(DepDelay), 1))
 
+delays %>% group_by(Origin, Name) %>% summarise(MeanDelay = round(mean(DepDelay), 1))
 
+table <- group_by(delays, Origin, Name)
+table <- summarise(table, MeanDelay = round(mean(DepDelay), 1))
+table
 
 
 

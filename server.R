@@ -1,11 +1,6 @@
 #
-# This is the server logic of a Shiny web application. You can run the
-# application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
+# This is the server logic of the Airline Delay application
+
 
 library(shiny)
 library(ggplot2)
@@ -24,14 +19,16 @@ shinyServer(function(input, output) {
   })
 
   delayMeans <- reactive({
-    showData() %>% group_by(Origin, Name) %>% summarise(MeanDelay = round(mean(DepDelay), 1))
+    table <- group_by(showData(), Origin, Name)
+    table <- summarise(table, MeanDelay = round(mean(DepDelay), 1))
+    table
+
   })
 
   output$DelayPlot <- renderPlot({
 
 
     #Plot
-    #qplot(Origin, DepDelay, data=showData(), geom=c("boxplot"), fill=Origin)
     p <- ggplot(showData(), aes(x=Origin, y=DepDelay)) +
       geom_boxplot() +
       geom_jitter(shape=16, size=2, position=position_jitter(0.2), alpha=0.5, aes(color=Name))
